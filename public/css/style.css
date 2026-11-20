@@ -1,0 +1,62 @@
+/* 追加 */
+
+body {
+    padding: 2em;
+  } 
+  ul{
+      margin: 0;
+      padding: 0;
+    }
+    li{
+      list-style: none;
+    }
+    .tab_list {
+      overflow: hidden;
+    }
+    .tab_list li {
+      float: left;
+      padding: 10px 20px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      transition: .3s;
+    }
+    .tab_list li:not(:first-child) {
+      border-left: none;
+    }
+    .tab_list li.active
+     {
+      background-color: red;
+      border-color: red;
+      color: black;
+      cursor: auto;
+    }
+    .article{
+      overflow: hidden;
+      margin-top: -1px;
+    }
+    .article li {
+      width: 320px;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+
+  .equal_table{
+  table-layout: fixed;
+  width: 300px;
+}
+
+.equal_table td{
+  word-wrap: break-word;
+}
+
+/* 商品検索 */
+.search{
+
+
+
+}
+.search_btn{
+
+  display:inline-block;
+
+}

@@ -1,0 +1,67 @@
+.date-label {
+  display: inline-block;
+  cursor: pointer;
+}
+.date {
+  height: 28px;
+  width: 150px;
+  cursor: pointer;
+}  
+.search_btn{
+
+  display:inline-block;
+
+}
+/* タブ */
+.tab_box{
+
+margin-top:15px;
+
+}
+@media screen and (max-width: 640px) {
+  .tbl-r05 {
+    width: 100%;
+  }
+  .tbl-r05 .thead {
+    display: none;
+  }
+  .tbl-r05 th {
+    display: none;
+  }
+  .tbl-r05 tr {
+    width: 100%;
+  }
+  .tbl-r05 td {
+    display: block;
+    text-align: right;
+    width: 100%;
+  }
+  .tbl-r05 td:first-child {
+    background: #e9727e;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+  }
+  .tbl-r05 td:before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+/* 検索フォーム */
+input{
+    width:100%;
+  }
+  .search{
+    text-align: center;
+  }
+  .search_btn{
+    margin-top: 15px
+  }
+/* タブ */
+.tab_box{
+
+  text-align: center;
+
+}
+}

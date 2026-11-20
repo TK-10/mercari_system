@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_app
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    # PHP-FPM(9000)はコンテナ間通信のみ許可し、ホストへは公開しない（FastCGI不正操作対策）
+    environment:
+      TZ: Asia/Tokyo
+    depends_on:
+      - db
+    networks:
+      - laravel
+
+  nginx:
+    image: arm64v8/nginx:latest
+    container_name: laravel_nginx
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - ./:/var/www
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - laravel
+
+  db:
+    image: arm64v8/mariadb:10.6
+    container_name: laravel_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: root
+      TZ: Asia/Tokyo
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      # 外部ネットワークへの全公開を防ぐため 127.0.0.1 のみにバインド
+      - "127.0.0.1:3306:3306"
+    networks:
+      - laravel
+
+  phpmyadmin:
+    image: arm64v8/phpmyadmin
+    container_name: laravel_phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      # 外部ネットワークへの全公開を防ぐため 127.0.0.1 のみにバインド
+      - "127.0.0.1:8081:80"
+    depends_on:
+      - db
+    networks:
+      - laravel
+
+volumes:
+  db_data:
+
+networks:
+  laravel:

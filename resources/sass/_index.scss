@@ -1,0 +1,87 @@
+/* 全体リセット */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+/* メインブロック */
+.main {
+  width: 100%;
+  min-height: 330px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+}
+
+/* サービスカード */
+.service {
+  background: #fff;
+  /* padding: 30px; */
+  padding: 50px;
+  border-radius: 10px;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+}
+
+/* サービスロゴ */
+.service-logo {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  margin: -90px auto 0;
+  background-color: #fff;
+  border: 18px solid #007bff;
+}
+.service-logo img {
+  width: 50px;
+  margin-top: 20px;
+  transition: transform 1s;
+}
+
+/* サービス名 */
+.service h4 {
+  font-size: 1.3rem;
+  height: 35px;
+  /* width: 80%; */
+  width: 100%;
+  background: #fff;
+  margin: 50px auto 0;
+  position: relative;
+}
+
+/* 影 */
+.shadowOne {
+  height: 200px;
+  width: 80%;
+  background: #fff;
+  position: absolute;
+  border-radius: 10px;
+  bottom: 0;
+  left: 10%;
+  z-index: -1;
+  box-shadow: 0 0 20px -15px #030380;
+  transition: transform 0.8s;
+}
+.shadowTwo {
+  height: 200px;
+  width: 64%;
+  background: #fff;
+  position: absolute;
+  border-radius: 10px;
+  bottom: 0;
+  left: 18%;
+  z-index: -2;
+}
+
+/* ホバー効果 */
+.main:hover .service {
+  transform: translateY(-50px);
+}
+.main:hover .shadowOne {
+  transform: translateY(-25px);
+}
+.main:hover img {
+  transform: rotate(360deg);
+}
