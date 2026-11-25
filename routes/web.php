@@ -56,11 +56,6 @@ Route::get('/chart', 'MercariController@chart');
 //ゲストログイン
 Route::get('guest', 'Auth\LoginController@guestLogin')->name('login.guest');
 
-//テスト
-Route::get('/sample', function () {
-    return view('sample');
-});
-
 //クローズドサイトにするため登録機能を停止
 Auth::routes([
     'register' => false, //ユーザ登録画面の無効

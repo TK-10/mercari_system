@@ -7,6 +7,8 @@ class MercariTableSeeder extends Seeder
     /**
      * Run the database seeds.
      *
+     * ※ 以下はデモ・検証用の架空データです（実在の人物・取引情報ではありません）。
+     *
      * @return void
      */
     public function run()

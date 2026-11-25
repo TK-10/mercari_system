@@ -49,9 +49,4 @@
         </div>
     </div>
 </div>
-
-{{-- bootstrap-datepickerのjavascriptコード --}}
-<script>
-    $('#date_sample').datepicker();
-</script>
 @endsection

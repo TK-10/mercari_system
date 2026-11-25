@@ -1,5 +1,4 @@
-# M1対応のphp8.1-fpmベース
-FROM arm64v8/php:8.1-fpm
+FROM php:8.1-fpm
 
 # システム更新と必要拡張のインストール
 RUN apt-get update && apt-get install -y \

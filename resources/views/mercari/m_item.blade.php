@@ -160,11 +160,6 @@
     })
 </script>
 
-{{-- bootstrap-datepickerのjavascriptコード --}}
-<script>
-    $('#date_sample').datepicker();
-</script>
-
 <script>
     const dateInput = document.getElementById('buy_date');
     const label = document.querySelector('.date-label');

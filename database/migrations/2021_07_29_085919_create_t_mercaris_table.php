@@ -31,6 +31,6 @@ class CreateTMercarisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mercari');
+        Schema::dropIfExists('mercaris');
     }
 }

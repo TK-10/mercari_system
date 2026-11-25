@@ -18,7 +18,7 @@ class CreateSoldsTable extends Migration
             $table->integer('item_id');
             $table->string('mid')->nullable();
             $table->string('item_name');
-            $table->string('sold_count');
+            $table->integer('sold_count')->default(0);
             $table->timestamps();
         });
     }

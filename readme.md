@@ -1,65 +1,98 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# 商品・在庫・注文管理システム（Laravel ポートフォリオ）
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+フリマ取引・EC出品における**商品在庫・変更履歴・注文状況・売上**を一元管理するための Web アプリケーションです。  
+※本リポジトリはポートフォリオ用のデモアプリであり、データベース内のシードデータ（ダミーデータ）のみを扱っています。外部サービスへのスクレイピングや非公式 API アクセス等は一切行っておりません。
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+## 主な機能
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **認証・ゲストログイン**
+  - クローズド運用を想定し、新規登録（`/register`）およびパスワードリセット（`/password/reset`）を無効化
+  - 動作確認用のゲストログイン機能（`ALLOW_GUEST_LOGIN` 環境変数で有効/無効を切り替え可能）
+- **商品・在庫管理**
+  - 商品一覧・複合検索（商品 ID / 商品名 / 価格 / 在庫数、ページネーション対応）
+  - 新規商品登録（類似商品名の重複チェック・確認モーダル、暗号学的乱数 `random_int` によるユニーク ID 付与）
+  - 商品詳細閲覧・情報編集・在庫数の加算・論理削除（`del_flg` 管理）
+- **操作履歴（監査ログ）**
+  - 登録・編集・在庫追加・削除の各操作を `histories` テーブルへ自動記録（操作者名はセッションの認証済みユーザーから取得）
+- **注文管理**
+  - 注文一覧・検索（商品 ID / 商品名 / 購入者名 / 購入日）
+  - 処理区分（未到着 / 到着済み / 返品）ごとのタブ切り替え・ページネーション
+- **売上チャート**
+  - Google Charts を用いた商品別売上数の円グラフ表示
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+---
 
-## Learning Laravel
+## 技術スタック
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+| カテゴリ | 技術 |
+| :--- | :--- |
+| バックエンド | PHP 8.1 / Laravel 9 |
+| データベース | MariaDB 10.6（テスト実行時は SQLite インメモリ） |
+| Web サーバー | Nginx |
+| フロントエンド | Blade / Bootstrap 4 / Vue 2 / Google Charts / Laravel Mix |
+| コンテナ | Docker / Docker Compose |
+| テスト | PHPUnit 9（Feature テスト / セキュリティテスト） |
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## 環境構築（Docker Compose）
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
+### 1. リポジトリのクローンと環境変数ファイルの作成
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
+```bash
+git clone <リポジトリURL>
+cd mercari_system
+cp .env.example .env
+```
 
-## Contributing
+### 2. コンテナの起動
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+docker compose up -d --build
+```
 
-## Security Vulnerabilities
+### 3. 依存パッケージのインストール・アプリケーション初期化
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+docker compose exec app composer install
+docker compose exec app php artisan key:generate
+docker compose exec app php artisan migrate --seed
+```
 
-## License
+ブラウザで `http://localhost:8080` にアクセスしてください（phpMyAdmin は `http://localhost:8081`）。
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+> **補足**: ゲストログインを利用する場合は、ID `2` のユーザー（または `.env` の `GUEST_USER_ID` で指定した ID のユーザー）が `users` テーブルに存在する必要があります。必要に応じて `php artisan tinker` 等でテスト用ユーザーを作成してください。
+
+---
+
+## テストの実行
+
+`phpunit.xml` でテスト用 DB として SQLite（`:memory:`）が設定されているため、DB コンテナへの影響なくテストを実行できます。
+
+```bash
+./vendor/bin/phpunit
+```
+
+Docker コンテナ内で実行する場合:
+
+```bash
+docker compose exec app ./vendor/bin/phpunit
+```
+
+### 主なテスト内容
+
+- **`tests/Feature/MercariControllerTest.php`**: 未認証リダイレクト、一覧・LIKE 検索、詳細/削除済み商品の 404 制御、編集時の監査ログ整合性（リクエスト上の操作者名偽装の無効化）、POST 削除、在庫加算、商品登録時の関連レコード生成、バリデーション、XSS エスケープ、LIKE ワイルドカード文字のエスケープ
+- **`tests/Feature/SecurityTest.php`**: 新規登録・パスワードリセットルートの無効化（404）、ゲストログインの有効/無効制御（403）、未許可HTTPメソッドアクセスの遮断（405）
+
+---
+
+## セキュリティ・品質面で意識した点
+
+- **SQL LIKE 検索のワイルドカードエスケープ**: `%` や `_` を入力された場合でも意図しない全件一致を防ぐためエスケープ処理を実装（SQLite / MySQL 両対応）。
+- **監査ログの改ざん防止**: 履歴テーブルへの操作者名記録時、リクエストパラメータを信用せず `Auth::user()->name` を参照。
+- **XSS 対策**: チャート描画用の JS 埋め込み時に `JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP` オプション付きで `json_encode` を実施。
+- **Web サーバー / コンテナのハードニング**:
+  - `nginx/default.conf` にセキュリティヘッダ（`X-Frame-Options`, `X-Content-Type-Options`, `X-XSS-Protection`, `Referrer-Policy`）および隠しファイル（`.env`, `.git` 等）アクセス拒否を設定。
+  - `docker-compose.yml` で公開ポートを `127.0.0.1` に限定バインドし、PHP-FPM（9000）はコンテナ間通信のみに制限。

@@ -1,6 +1,6 @@
 {
-    "name": "yourname/mercari",
-    "description": "Laravel 9 project",
+    "name": "taketo/mercari-inventory-system",
+    "description": "Inventory and order management web application built with Laravel 9",
     "type": "project",
     "require": {
         "php": "^8.0",
